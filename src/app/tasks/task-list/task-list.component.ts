@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Task } from './../models/task.model';
-import { TaskArrayService } from './../services/task-array.service';
+import { TaskArrayService, TaskPromiseService  } from './../services';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -13,7 +13,9 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private taskArrayService: TaskArrayService) { }
+    private taskArrayService: TaskArrayService,
+    private taskPromiseService: TaskPromiseService
+  ) { }
 
   ngOnInit() {
     this.getTasks().catch(err => console.log(err));
@@ -29,6 +31,6 @@ export class TaskListComponent implements OnInit {
   }
 
   private async getTasks() {
-    this.tasks = await this.taskArrayService.getTasks();
+    this.tasks = await this.taskPromiseService.getTasks();
   }
 }
